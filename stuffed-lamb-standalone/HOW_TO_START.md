@@ -1,95 +1,73 @@
-# 🚀 How to Start the Stuffed Lamb System
+# 🚀 How to Start Stuffed Lamb - SIMPLE GUIDE
 
-**Quick answer: Just double-click one of these files based on what you need!**
-
----
-
-## ⚡ For Windows Users
-
-### **Option 1: Simple Testing (Recommended First)**
-📁 **Double-click:** `START_SIMPLE.bat`
-
-**What it does:**
-- ✅ Starts the server on http://localhost:8000
-- ✅ Perfect for local testing and API development
-- ✅ No ngrok needed
-
-**Use when:** You just want to test the system locally
+**For Windows: Just go to the `scripts` folder and double-click a file!**
 
 ---
 
-### **Option 2: VAPI Integration**
-📁 **Double-click:** `START_WITH_VAPI.bat`
+## ⚡ Quick Start (3 Steps)
 
-**What it does:**
-- ✅ Starts the server
-- ✅ Launches ngrok tunnel (public URL)
-- ✅ Shows you the webhook URL for VAPI
-- ⚠️ Requires ngrok installed
+### **Step 1:** Open File Explorer
+Navigate to: `stuffed-lamb-standalone\scripts\`
 
-**Use when:** You want to test VAPI voice calls
+### **Step 2:** Choose what you need:
 
-**Requires:** ngrok - Download from https://ngrok.com/download
+| File | What it does | When to use |
+|------|--------------|-------------|
+| **START_HERE.bat** | Simple server only | ⭐ Local testing (recommended first!) |
+| **START_WITH_VAPI.bat** | Server + ngrok tunnel | 🚀 VAPI voice calls (needs ngrok) |
+| **STOP.bat** | Stop all services | 🛑 When you're done |
+
+### **Step 3:** Double-click the file you want!
+
+---
+
+## 📋 For First-Time Users
+
+**Recommended:** Start with `START_HERE.bat`
+
+1. Go to `scripts` folder
+2. Double-click `START_HERE.bat`
+3. Wait 5-10 seconds
+4. Open browser: http://localhost:8000/health
+5. You should see: `{"status": "healthy"}`
+
+✅ **Done!** Your server is running!
+
+---
+
+## 🚀 For VAPI Integration
+
+**Need to test voice calls?** Use `START_WITH_VAPI.bat`
+
+**Requirements:**
+- ngrok installed (download: https://ngrok.com/download)
+- Internet connection
+
+**Steps:**
+1. Go to `scripts` folder
+2. Double-click `START_WITH_VAPI.bat`
+3. Multiple windows will open (server, ngrok)
+4. Check the window for your public URL: `https://abc123.ngrok-free.app`
+5. Use in VAPI webhook: `https://your-url/vapi/webhook`
 
 ---
 
 ## 🐧 For Linux/Mac Users
 
-### **Option 1: Simple Testing (Recommended First)**
-📁 **Run:** `./START_SIMPLE.sh`
+Same files, just `.sh` instead of `.bat`:
 
 ```bash
-cd stuffed-lamb-standalone
-./START_SIMPLE.sh
-```
+cd stuffed-lamb-standalone/scripts
 
-**What it does:**
-- ✅ Starts the server on http://localhost:8000
-- ✅ Perfect for local testing
+# Simple server
+./START_HERE.sh
 
-**Use when:** You just want to test the system locally
-
----
-
-### **Option 2: VAPI Integration**
-📁 **Run:** `./START_WITH_VAPI.sh`
-
-```bash
-cd stuffed-lamb-standalone
+# With VAPI/ngrok
 ./START_WITH_VAPI.sh
+
+# Stop services
+./STOP.sh
 ```
-
-**What it does:**
-- ✅ Starts the server
-- ✅ Launches ngrok tunnel
-- ✅ Shows webhook URL for VAPI
-- ⚠️ Requires ngrok installed
-
-**Requires:** ngrok - Download from https://ngrok.com/download
-
----
-
-## 📊 Quick Comparison
-
-| Launcher | Purpose | ngrok Needed | VAPI Ready |
-|----------|---------|--------------|------------|
-| `START_SIMPLE.*` | Local testing | ❌ No | ❌ No |
-| `START_WITH_VAPI.*` | VAPI integration | ✅ Yes | ✅ Yes |
-
----
-
-## ✅ After Starting
-
-### Verify it's working:
-1. Wait 5-10 seconds for startup
-2. Open browser to: http://localhost:8000/health
-3. You should see: `{"status": "healthy", ...}`
-
-### Test with VAPI (if using START_WITH_VAPI):
-1. Check the command window for your ngrok URL
-2. It will look like: `https://abc123.ngrok-free.app`
-3. Use in VAPI webhook settings: `https://abc123.ngrok-free.app/vapi/webhook`
-4. Access ngrok dashboard: http://localhost:4040
 
 ---
 
@@ -97,50 +75,12 @@ cd stuffed-lamb-standalone
 
 ### Windows:
 - Press `Ctrl+C` in the command window
-- Or close the window
+- OR double-click `scripts\STOP.bat`
+- OR close the window
 
 ### Linux/Mac:
-- Press `Ctrl+C` in the terminal
-- Or run: `./scripts/stop.sh`
-
----
-
-## 🔧 Advanced Options
-
-If you need more control, you can run scripts directly from the `scripts/` folder:
-
-### Windows:
-```cmd
-cd scripts
-start.bat              # Simple server
-start-with-ngrok.bat   # Full system with ngrok
-stop.bat               # Stop all services
-```
-
-### Linux/Mac:
-```bash
-cd scripts
-./start.sh             # Simple server
-./start-complete.sh    # Full system with ngrok
-./stop.sh              # Stop all services
-./verify_setup.sh      # Check configuration
-```
-
----
-
-## 🐍 Direct Python (Most Basic)
-
-If you prefer running Python directly:
-
-```bash
-# Windows
-python run.py
-
-# Linux/Mac
-python3 run.py
-```
-
-This starts just the server on http://localhost:8000 (no ngrok)
+- Press `Ctrl+C` in terminal
+- OR run `./scripts/STOP.sh`
 
 ---
 
@@ -152,27 +92,49 @@ This starts just the server on http://localhost:8000 (no ngrok)
 
 ### ".env file not found"
 - Copy `.env.example` to `.env`
-- Edit `.env` with your Twilio credentials
-- See `docs/ENV_SETUP_GUIDE.md` for help
+- Edit `.env` with your credentials
+- See `docs/ENV_SETUP_GUIDE.md`
 
 ### "ngrok not found"
-- Download from https://ngrok.com/download
-- Add to your PATH
-- Or use `START_SIMPLE` instead (no ngrok needed)
+- Download: https://ngrok.com/download
+- Add to PATH
+- OR use `START_HERE.bat` instead (no ngrok needed)
 
 ### Port 8000 already in use
-- Stop any other servers using port 8000
-- Or edit `.env` to change PORT=8000 to another port
+- Stop other servers
+- OR edit `.env` file: change `PORT=8000` to another port
 
 ---
 
 ## 📚 More Help
 
-- **Quick Start Guide:** `docs/QUICK_START.md`
-- **Production Deployment:** `docs/PRODUCTION_DEPLOYMENT.md`
 - **Environment Setup:** `docs/ENV_SETUP_GUIDE.md`
+- **Production Deploy:** `docs/PRODUCTION_DEPLOYMENT.md`
+- **Full Structure:** `FOLDER_STRUCTURE.md`
 - **Main README:** `README.md`
 
 ---
 
-**Need help?** Check the docs folder or review the logs in `logs/stuffed_lamb.log`
+## 🎯 File Locations
+
+```
+stuffed-lamb-standalone/
+├── scripts/                  ← ALL STARTUP FILES HERE!
+│   ├── START_HERE.bat        ← Windows: Simple start
+│   ├── START_WITH_VAPI.bat   ← Windows: With ngrok
+│   ├── STOP.bat              ← Windows: Stop
+│   ├── START_HERE.sh         ← Linux: Simple start
+│   ├── START_WITH_VAPI.sh    ← Linux: With ngrok
+│   ├── STOP.sh               ← Linux: Stop
+│   ├── verify_setup.sh       ← Check configuration
+│   └── healthcheck.py        ← Health monitoring
+│
+├── run.py                    ← Direct Python start (advanced)
+├── .env                      ← Your configuration
+├── HOW_TO_START.md           ← This file
+└── README.md                 ← Project overview
+```
+
+---
+
+**That's it! Just go to `scripts\` and double-click `START_HERE.bat`!** 🎉
