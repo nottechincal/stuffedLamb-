@@ -11,6 +11,35 @@ Upload `vapi-tools.json` to VAPI. Update `YOUR_WEBHOOK_URL` with your actual web
 ### 3. Webhook URL
 Set your webhook URL to: `https://your-domain.com/webhook`
 
+### 4. ⚠️ **CRITICAL: Webhook Authentication**
+
+**Your server requires authentication!** Without this, all tools will return 401 UNAUTHORIZED.
+
+**Quick Fix (Testing Only):**
+```bash
+# In .env, comment out or empty this line:
+WEBHOOK_SHARED_SECRET=
+```
+
+**Proper Fix (Production):**
+
+In VAPI, configure each tool's server with authentication header:
+
+```json
+{
+  "server": {
+    "url": "https://your-domain.com/webhook",
+    "headers": {
+      "X-Webhook-Secret": "Uqz3uU8vT38B0h9a7n5j"
+    }
+  }
+}
+```
+
+**The secret value MUST match your `.env` file!**
+
+See `WEBHOOK_AUTH_FIX.md` for detailed troubleshooting.
+
 ## Configuration Steps
 
 ### Step 1: Deploy Server
