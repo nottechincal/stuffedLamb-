@@ -4,6 +4,9 @@ REM Stuffed Lamb Complete Startup - Windows
 REM Starts: Redis (optional) + Application + ngrok
 REM ======================================
 
+REM Change to the project root directory
+cd /d "%~dp0\.."
+
 echo.
 echo ============================================
 echo Stuffed Lamb VAPI Ordering System
