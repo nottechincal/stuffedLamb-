@@ -1446,17 +1446,19 @@ def _match_item_from_description(description: str) -> Optional[str]:
             return item_id
 
     if FUZZY_MATCHING_AVAILABLE and ITEM_VARIANT_LOOKUP:
-        # First pass: looser fuzzy match to tolerate heavier misspellings in longer phrases
-        match = fuzzy_match(normalized_description, list(ITEM_VARIANT_LOOKUP.keys()), threshold=72)
+        # First pass: strict fuzzy match to avoid matching wrong items (e.g., "Corona" shouldn't match "Water")
+        # Increased threshold from 72 to 85 to prevent false positives
+        match = fuzzy_match(normalized_description, list(ITEM_VARIANT_LOOKUP.keys()), threshold=85)
         if match:
             return ITEM_VARIANT_LOOKUP.get(match)
 
         # Second pass: check each variant against the whole phrase with partial ratio
+        # Also increased threshold to 85 for stricter matching
         best_variant = None
         best_score = 0
         for variant in ITEM_VARIANT_LOOKUP.keys():
             score = fuzz.partial_ratio(normalized_description, variant)
-            if score > best_score and score >= 72:
+            if score > best_score and score >= 85:
                 best_score = score
                 best_variant = variant
         if best_variant:
@@ -1506,10 +1508,23 @@ def _detect_item_addons(item_id: Optional[str], description: str) -> List[str]:
     return list(dict.fromkeys(addons))
 
 
-def _detect_item_extras(item_id: Optional[str], description: str) -> List[str]:
+def _detect_item_extras(item_id: Optional[str], description: str, already_added_as_addons: List[str] = None) -> List[str]:
+    """
+    Detect extras from description.
+    Args:
+        item_id: The menu item ID
+        description: The parsed description
+        already_added_as_addons: List of modifiers already added as addons (to prevent duplication)
+    """
+    if already_added_as_addons is None:
+        already_added_as_addons = []
+
     extras: List[str] = []
 
     for extra_name in sorted(list_modifier_names('extras'), key=lambda name: len(normalize_text(name)), reverse=True):
+        # Skip if already added as an addon (prevents duplication of nuts/sultanas on Mandi dishes)
+        if extra_name in already_added_as_addons:
+            continue
         # Always require a mention of the extra to avoid over-adding unrelated modifiers
         if not _text_mentions_modifier(description, extra_name):
             continue
@@ -1725,7 +1740,8 @@ def tool_quick_add_item(params: Dict[str, Any]) -> Dict[str, Any]:
             return {"ok": False, "error": "Sorry, that item isn't available right now."}
 
         addons = _detect_item_addons(item_id, desc_lower)
-        extras = _detect_item_extras(item_id, desc_lower)
+        # Pass addons to extras detection to prevent duplication
+        extras = _detect_item_extras(item_id, desc_lower, already_added_as_addons=addons)
 
         drink_brand = None
         if item_id == 'SOFT_DRINK':
