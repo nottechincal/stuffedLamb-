@@ -82,21 +82,25 @@ nano .env  # Add your Twilio credentials and SHOP_ORDER_TO
 
 ### 3. Run the Server
 
-**For VAPI Integration (includes ngrok):**
-```bash
-# Windows
-start.bat
+**Windows:**
+- Go to `scripts/` folder
+- Double-click `START_HERE.bat` for simple server
+- OR `START_WITH_VAPI.bat` for VAPI integration with ngrok
 
-# Linux/Mac
-./start.sh
+**Linux/Mac:**
+```bash
+cd scripts/
+./START_HERE.sh           # Simple server
+# OR
+./START_WITH_VAPI.sh      # With VAPI + ngrok
 ```
 
-**For Simple Testing (no ngrok):**
+**Direct Python (Advanced):**
 ```bash
 python run.py
 ```
 
-📖 **See [docs/QUICK_START.md](docs/QUICK_START.md) for detailed setup instructions**
+📖 **See [docs/HOW_TO_START.md](docs/HOW_TO_START.md) and [docs/QUICK_START.md](docs/QUICK_START.md) for detailed setup instructions**
 
 ---
 
@@ -104,11 +108,16 @@ python run.py
 
 | Document | Description |
 |----------|-------------|
+| **[HOW_TO_START.md](docs/HOW_TO_START.md)** | 🚀 **START HERE** - Simple startup guide |
 | **[QUICK_START.md](docs/QUICK_START.md)** | Get started in 10 minutes |
 | **[STARTUP_GUIDE.md](docs/STARTUP_GUIDE.md)** | All startup options & ngrok setup |
 | **[PRODUCTION_DEPLOYMENT.md](docs/PRODUCTION_DEPLOYMENT.md)** | Deploy to production |
 | **[ENV_SETUP_GUIDE.md](docs/ENV_SETUP_GUIDE.md)** | Environment variables guide |
 | **[SETUP_CHECKLIST.md](docs/SETUP_CHECKLIST.md)** | Complete setup checklist |
+| **[FOLDER_STRUCTURE.md](docs/FOLDER_STRUCTURE.md)** | Project organization guide |
+| **[WEBHOOK_AUTH_FIX.md](docs/WEBHOOK_AUTH_FIX.md)** | Fix 401 webhook errors |
+| **[SYSTEM_AUDIT_REPORT.md](docs/SYSTEM_AUDIT_REPORT.md)** | System audit results |
+| **[PRODUCTION_READINESS_REPORT.md](docs/PRODUCTION_READINESS_REPORT.md)** | Production status |
 
 ## 🧪 Running Tests
 
@@ -144,22 +153,19 @@ All scripts are located in the `scripts/` folder:
 
 ```bash
 # Startup scripts
-scripts/start-with-ngrok.bat      # Windows: Full startup with ngrok
-scripts/start-complete.sh         # Linux/Mac: Full startup with ngrok
-scripts/start.bat                 # Windows: Basic startup
-scripts/start.sh                  # Linux/Mac: Basic startup
+scripts/START_HERE.bat            # Windows: Simple server startup
+scripts/START_HERE.sh             # Linux/Mac: Simple server startup
+scripts/START_WITH_VAPI.bat       # Windows: With VAPI + ngrok
+scripts/START_WITH_VAPI.sh        # Linux/Mac: With VAPI + ngrok
 
 # Utility scripts
-scripts/stop.bat                  # Windows: Stop all services
-scripts/stop.sh                   # Linux/Mac: Stop all services
+scripts/STOP.bat                  # Windows: Stop all services
+scripts/STOP.sh                   # Linux/Mac: Stop all services
 scripts/verify_setup.sh           # Verify system configuration
 scripts/healthcheck.py            # Health check utility
 ```
 
-**Quick launchers at root:**
-- `start.bat` (Windows) - Launches full startup with ngrok
-- `start.sh` (Linux/Mac) - Launches full startup with ngrok
-- `python run.py` - Direct run (no ngrok)
+**See [docs/HOW_TO_START.md](docs/HOW_TO_START.md) for detailed startup instructions**
 
 ## 📁 Project Structure
 
@@ -183,37 +189,42 @@ stuffed-lamb/
 │   └── test_stuffed_lamb_system.py
 │
 ├── docs/                            # 📚 Documentation
+│   ├── HOW_TO_START.md              # 🚀 Simple startup guide
 │   ├── QUICK_START.md               # Get started in 10 minutes
 │   ├── STARTUP_GUIDE.md             # All startup options & ngrok
 │   ├── PRODUCTION_DEPLOYMENT.md     # Production deployment guide
 │   ├── ENV_SETUP_GUIDE.md           # Environment variables
 │   ├── SETUP_CHECKLIST.md           # Complete setup checklist
+│   ├── FOLDER_STRUCTURE.md          # Project organization
+│   ├── WEBHOOK_AUTH_FIX.md          # Fix 401 webhook errors
+│   ├── SYSTEM_AUDIT_REPORT.md       # System audit results
+│   ├── PRODUCTION_READINESS_REPORT.md  # Production status
 │   ├── SYSTEM_STATUS_REPORT.md      # System status overview
 │   └── ACTION_REQUIRED.md           # Setup action items
 │
 ├── scripts/                         # 🛠️ Utility scripts
-│   ├── start-with-ngrok.bat         # Windows: Full startup
-│   ├── start-complete.sh            # Linux: Full startup
-│   ├── start.bat                    # Windows: Basic startup
-│   ├── start.sh                     # Linux: Basic startup
-│   ├── stop.bat                     # Windows: Stop services
-│   ├── stop.sh                      # Linux: Stop services
+│   ├── START_HERE.bat               # Windows: Simple startup
+│   ├── START_HERE.sh                # Linux/Mac: Simple startup
+│   ├── START_WITH_VAPI.bat          # Windows: With VAPI + ngrok
+│   ├── START_WITH_VAPI.sh           # Linux/Mac: With VAPI + ngrok
+│   ├── STOP.bat                     # Windows: Stop services
+│   ├── STOP.sh                      # Linux/Mac: Stop services
 │   ├── verify_setup.sh              # Setup verification
 │   └── healthcheck.py               # Health check utility
 │
 ├── deployment/                      # 🚀 Deployment files
-│   └── stuffed-lamb.service         # Systemd service
+│   ├── stuffed-lamb.service         # Systemd service
+│   ├── Dockerfile                   # Docker image definition
+│   └── docker-compose.yml           # Docker Compose config
 │
-├── templates/                       # 📋 Template files
-│   └── .env.CORRECTED               # Alternative .env template
+├── _archive/                        # 📦 Archived files (optional)
+│   ├── examples/                    # VAPI SDK examples
+│   ├── templates/                   # Old template files
+│   └── test_reports/                # Old test results
 │
 ├── run.py                           # Application entry point
 ├── requirements.txt                 # Python dependencies
 ├── .env.example                     # Environment template
-├── Dockerfile                       # Docker image
-├── docker-compose.yml               # Docker Compose
-├── start.bat                        # Quick launcher (Windows)
-├── start.sh                         # Quick launcher (Linux/Mac)
 └── README.md                        # This file
 ```
 
@@ -373,7 +384,7 @@ pip install python-dotenv
 set -a; source .env; set +a; python run.py
 ```
 
-For more troubleshooting, see [PRODUCTION_DEPLOYMENT.md](PRODUCTION_DEPLOYMENT.md)
+For more troubleshooting, see [PRODUCTION_DEPLOYMENT.md](docs/PRODUCTION_DEPLOYMENT.md)
 
 ## 📞 Support
 
