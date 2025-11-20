@@ -5,6 +5,9 @@
 
 set -e  # Exit on error
 
+# Change to the project root directory
+cd "$(dirname "$0")/.."
+
 echo ""
 echo "===================================="
 echo "Stuffed Lamb VAPI Ordering System"
